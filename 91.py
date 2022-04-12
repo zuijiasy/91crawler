@@ -19,13 +19,16 @@ class Pron_91():
 
     def craw_urls(self):
         request = urllib.request.Request(self.url, headers=self.ua_header)
-        response = urllib.request.urlopen(request)
+        response = urllib.request.urlopen(request,timeout=30)
         xmlselector = etree.HTML(response.read().decode('utf-8'))
         urls = set(xmlselector.xpath('//div/a[@style="font-weight: bold;color: purple"]/@href'))
         urls_list = []
         for url in urls:
             urls_list.append(self.domain + url)
         return urls_list
+
+    def random_file_name(self):
+        return ''.join(random.sample(string.ascii_letters + string.digits, 12))
 
     def craw_pic(self):
         picheader = {
@@ -35,7 +38,7 @@ class Pron_91():
 
         for link in self.craw_urls():
             request = urllib.request.Request(link, headers=self.ua_header)
-            response = urllib.request.urlopen(request)
+            response = urllib.request.urlopen(request,timeout=30)
             xmlselector = etree.HTML(response.read().decode('utf-8'))
             title = xmlselector.xpath('//h1')
             if str(title[0].text) in os.listdir('d:\\91\\'):
@@ -54,7 +57,7 @@ class Pron_91():
                     print("正在下载第{}图片".format(x))
                     houzhui = pic[x].split('.')
                     picrequest = urllib.request.Request(url=pic[x] , headers=picheader)
-                    picresponse = urllib.request.urlopen(picrequest)
+                    picresponse = urllib.request.urlopen(picrequest,timeout=30)
                     with open("d:\\91\\" + title[0].text + "\\" + str(x) + "." + houzhui[-1], 'wb') as f:
                         f.write(picresponse.read())
                     x += 1
@@ -79,7 +82,7 @@ class Pron_91():
                     print("正在下载第{}图片".format(x))
                     houzhui = pic[x].split('.')
                     picrequest = urllib.request.Request(url=pic[x] , headers=picheader)
-                    picresponse = urllib.request.urlopen(picrequest)
+                    picresponse = urllib.request.urlopen(picrequest,timeout=30)
                     with open("d:\\91\\" + title[0].text + "\\" + str(x) + "." + houzhui[-1], 'wb') as f:
                         f.write(picresponse.read())
                     x += 1
