@@ -17,10 +17,9 @@ class Pron_91():
             "User-Agent" : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.75 Safari/537.36",
             "referer" : "https://t0328.wonderfulday27.live/"
         }
-        self.proxies = {"http":"http://127.0.0.1:7890","https":"http://127.0.0.1:7890"}
-
+       
     def craw_urls(self):
-        response = requests.get(url=self.url,headers=self.ua_header,proxies=self.proxies)
+        response = requests.get(url=self.url,headers=self.ua_header)
         xmlselector = etree.HTML(response.content.decode('utf-8'))
         urls = set(xmlselector.xpath('//div/a[@style="font-weight: bold;color: purple"]/@href'))
         urls_list = []
@@ -29,7 +28,7 @@ class Pron_91():
         return urls_list
 
     def craw_pic(self,link):
-        response = requests.get(url=link,headers=self.ua_header,proxies=self.proxies)
+        response = requests.get(url=link,headers=self.ua_header)
         xmlselector = etree.HTML(response.content.decode('utf-8'))
         soup1 = BeautifulSoup(response.content,'lxml')
         soup2 = soup1.title.string.split('-')
@@ -49,7 +48,7 @@ class Pron_91():
                 while x < len(pic):
                     print("正在下载第{}图片".format(x))
                     houzhui = pic[x].split('.')
-                    picresponse = requests.get(url=pic[x],headers=self.ua_header,proxies=self.proxies)
+                    picresponse = requests.get(url=pic[x],headers=self.ua_header)
                     with open("d:\\91\\" + title + "\\" + str(x) + "." + houzhui[-1], 'wb') as f:
                         f.write(picresponse.content)
                     x += 1
