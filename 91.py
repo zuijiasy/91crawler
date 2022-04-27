@@ -31,9 +31,9 @@ class Pron_91():
         response = requests.get(url=link,headers=self.ua_header)
         xmlselector = etree.HTML(response.content.decode('utf-8'))
         soup1 = BeautifulSoup(response.content,'lxml')
-        soup2 = soup1.title.string.split('-')
+        soup2 = soup1.title.string.split(' - ')
         soup3 = soup2[0].replace('\\','-')
-        title = soup3.replace('/','-')[0:-1]
+        title = soup3.replace('/','-')
         if str(title) in os.listdir('d:\\91\\'):
             print('{} --- 资源在文件夹中,将解析下一个'.format(str(title)))
         else:
